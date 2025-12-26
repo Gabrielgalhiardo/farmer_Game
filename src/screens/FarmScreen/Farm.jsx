@@ -189,6 +189,9 @@ const Farm = () => {
     // Estado para rastrear qual ferramenta está sendo arrastada
     const [draggingTool, setDraggingTool] = useState(null);
     
+    // Estado para rastrear qual ferramenta está selecionada (mobile)
+    const [selectedTool, setSelectedTool] = useState(null);
+    
     // Atualiza o estado de crescimento dos legumes a cada segundo
     useEffect(() => {
         const interval = setInterval(() => {
@@ -208,6 +211,7 @@ const Farm = () => {
                 onHarvest={handleHarvest}
                 onWater={handleWater}
                 draggingTool={draggingTool}
+                selectedTool={selectedTool}
             />
             <Menu 
                 inventory={inventory} 
@@ -221,7 +225,12 @@ const Farm = () => {
                 getLegumeLevel={getLegumeLevel}
                 getPrecoCompra={getPrecoCompra}
             />
-            <ToolBox onDragStart={setDraggingTool} onDragEnd={() => setDraggingTool(null)} />
+            <ToolBox 
+                onDragStart={setDraggingTool} 
+                onDragEnd={() => setDraggingTool(null)}
+                selectedTool={selectedTool}
+                onSelectTool={setSelectedTool}
+            />
             <MoneyMenu money={money} />
         </div>
     )

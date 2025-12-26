@@ -3,8 +3,30 @@ import { useState, useEffect } from 'react';
 import baldeImg from '../../assets/images/toolbox/balde.png';
 import enxadaImg from '../../assets/images/toolbox/enxada.png';
 
-const ToolBox = ({ onDragStart, onDragEnd }) => {
+const ToolBox = ({ onDragStart, onDragEnd, selectedTool, onSelectTool }) => {
     const [draggingItem, setDraggingItem] = useState(null);
+    
+    // Detecta se é mobile
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    
+    const handleToolClick = (toolType) => {
+        if (isMobile && onSelectTool) {
+            // Toggle: se já está selecionado, deseleciona. Caso contrário, seleciona
+            if (selectedTool === toolType) {
+                onSelectTool(null);
+            } else {
+                onSelectTool(toolType);
+            }
+        }
+    };
 
     useEffect(() => {
         if (draggingItem) {
@@ -80,18 +102,20 @@ const ToolBox = ({ onDragStart, onDragEnd }) => {
     return (
         <div className="toolbox-container">
             <div 
-                className={`toolbox-item toolbox-item-balde ${draggingItem === 'balde' ? 'dragging' : ''}`}
-                title="Balde"
-                draggable="true"
-                onDragStart={(e) => handleDragStart(e, 'balde')}
+                className={`toolbox-item toolbox-item-balde ${draggingItem === 'balde' ? 'dragging' : ''} ${selectedTool === 'balde' ? 'selected' : ''}`}
+                title={isMobile ? "Balde (Toque para selecionar)" : "Balde"}
+                draggable={!isMobile ? "true" : "false"}
+                onClick={() => handleToolClick('balde')}
+                onDragStart={(e) => !isMobile && handleDragStart(e, 'balde')}
                 onDrag={handleDrag}
                 onDragEnd={handleDragEnd}
             ></div>
             <div 
-                className={`toolbox-item toolbox-item-enxada ${draggingItem === 'enxada' ? 'dragging' : ''}`}
-                title="Enxada"
-                draggable="true"
-                onDragStart={(e) => handleDragStart(e, 'enxada')}
+                className={`toolbox-item toolbox-item-enxada ${draggingItem === 'enxada' ? 'dragging' : ''} ${selectedTool === 'enxada' ? 'selected' : ''}`}
+                title={isMobile ? "Enxada (Toque para selecionar)" : "Enxada"}
+                draggable={!isMobile ? "true" : "false"}
+                onClick={() => handleToolClick('enxada')}
+                onDragStart={(e) => !isMobile && handleDragStart(e, 'enxada')}
                 onDrag={handleDrag}
                 onDragEnd={handleDragEnd}
             ></div>

@@ -1,7 +1,7 @@
 import './Block.css';
 import { useRef, useEffect } from 'react';
 
-const Block = ({ legumesPlantados = [], onPlantSeed, selectedSeed, growthTick, onHarvest, onWater, draggingTool }) => {
+const Block = ({ legumesPlantados = [], onPlantSeed, selectedSeed, growthTick, onHarvest, onWater, draggingTool, selectedTool }) => {
     // Função para calcular tempo decorrido (considera aceleração 2x após regar)
     const getTempoDecorrido = (legume) => {
         if (!legume.plantadoEm) return legume.tempoCrescimento; // Se não tem timestamp, assume que está pronto
@@ -44,7 +44,26 @@ const Block = ({ legumesPlantados = [], onPlantSeed, selectedSeed, growthTick, o
     });
 
     const handleCellClick = (posicao, legume) => {
-        // Se a célula já tem um legume, não faz nada no click (usa drop para ferramentas)
+        // Se há uma ferramenta selecionada (modo mobile), usa a ferramenta
+        if (legume && selectedTool) {
+            if (selectedTool === 'enxada') {
+                // Coleta o legume se estiver pronto
+                if (isReady(legume) && onHarvest) {
+                    onHarvest(posicao);
+                }
+            } else if (selectedTool === 'balde') {
+                // Acelera o crescimento (apenas se ainda não foi acelerado)
+                if (!legume.acelerado && !isReady(legume) && onWater) {
+                    onWater(posicao);
+                }
+            }
+            return;
+        }
+        
+        // Se há uma ferramenta sendo arrastada (modo desktop), não faz nada no click
+        if (legume && draggingTool) return;
+        
+        // Se a célula já tem um legume e não há ferramenta selecionada, não faz nada
         if (legume) return;
         
         // Se não há semente selecionada, não faz nada
@@ -116,7 +135,7 @@ const Block = ({ legumesPlantados = [], onPlantSeed, selectedSeed, growthTick, o
                                 backgroundImage: `url(${legume.imagem})`,
                                 opacity: pronto ? 1 : 0.5 + (progresso * 0.5) // Vai de 0.5 a 1.0
                             } : {}}
-                            title={legume ? (pronto ? `${legume.nome} - Pronto para colher! (Passe a enxada)` : `${legume.nome} - Crescendo... (${Math.ceil(tempoRestante)}s) ${legume.acelerado ? '[Acelerado]' : '[Passe o balde para acelerar]'}`) : selectedSeed ? `Clique para plantar ${selectedSeed.nome}` : 'Posição vazia'}
+                            title={legume ? (pronto ? `${legume.nome} - Pronto para colher! ${selectedTool === 'enxada' ? '(Toque para colher)' : '(Selecione a enxada)'}` : `${legume.nome} - Crescendo... (${Math.ceil(tempoRestante)}s) ${legume.acelerado ? '[Acelerado]' : selectedTool === 'balde' ? '(Toque para regar)' : '[Selecione o balde]'}`) : selectedSeed ? `Clique para plantar ${selectedSeed.nome}` : 'Posição vazia'}
                             onClick={() => handleCellClick(posicao, legume)}
                             onDragOver={(e) => handleDragOver(e, posicao, legume)}
                             onDrop={(e) => handleDrop(e, posicao, legume)}

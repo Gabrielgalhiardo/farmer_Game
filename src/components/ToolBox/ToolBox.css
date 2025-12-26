@@ -106,10 +106,26 @@
         0 0 20px rgba(255, 201, 71, 0.6),
         0 4px 12px rgba(0, 0, 0, 0.5);
     filter: drop-shadow(0 4px 10px rgba(255, 201, 71, 0.7)) brightness(1.15);
+    transform: scale(1.1);
 }
 
 .toolbox-item.selected::before {
     filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 201, 71, 0.7));
+}
+
+/* Mobile - cursor pointer para indicar que é clicável */
+@media (max-width: 768px) {
+    .toolbox-item {
+        cursor: pointer !important;
+    }
+    
+    .toolbox-item:active {
+        transform: scale(0.95);
+    }
+    
+    .toolbox-item.selected:active {
+        transform: scale(1.05);
+    }
 }
 
 /* Estilo global durante o drag */
@@ -125,21 +141,22 @@ body.dragging-tool *:hover {
 /* Mobile Responsive - ajuste para mobile */
 @media (max-width: 768px) {
     .toolbox-container {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: clamp(320px, 70vw, 450px);
-        height: clamp(85px, 10vw, 100px);
-        border-radius: clamp(24px, 4vw, 36px) clamp(24px, 4vw, 36px) 0 0;
-        border: clamp(10px, 1.5vw, 14px) solid #703f0a;
-        border-bottom: none;
-        padding: clamp(12px, 1.5vw, 16px) clamp(20px, 3vw, 28px);
-        gap: clamp(18px, 2.5vw, 24px);
-        z-index: 200;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: clamp(320px, 70vw, 450px) !important;
+        height: clamp(85px, 10vw, 100px) !important;
+        border-radius: clamp(24px, 4vw, 36px) clamp(24px, 4vw, 36px) 0 0 !important;
+        border: clamp(10px, 1.5vw, 14px) solid #703f0a !important;
+        border-bottom: none !important;
+        padding: clamp(12px, 1.5vw, 16px) clamp(20px, 3vw, 28px) !important;
+        gap: clamp(18px, 2.5vw, 24px) !important;
+        z-index: 1000 !important;
         box-shadow: 
             inset 0 2px 4px rgba(255, 255, 255, 0.1),
-            0 -4px 16px rgba(0, 0, 0, 0.6);
+            0 -4px 16px rgba(0, 0, 0, 0.6) !important;
+        display: flex !important;
     }
 
     .toolbox-item {
@@ -155,12 +172,18 @@ body.dragging-tool *:hover {
 
 @media (max-width: 480px) {
     .toolbox-container {
-        width: clamp(280px, 85vw, 400px);
-        height: clamp(75px, 11vw, 90px);
-        padding: clamp(10px, 1.8vw, 14px) clamp(16px, 3.5vw, 24px);
-        gap: clamp(16px, 3vw, 22px);
-        border-radius: clamp(20px, 4.5vw, 32px) clamp(20px, 4.5vw, 32px) 0 0;
-        border: clamp(8px, 1.8vw, 12px) solid #703f0a;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: clamp(280px, 85vw, 400px) !important;
+        height: clamp(75px, 11vw, 90px) !important;
+        padding: clamp(10px, 1.8vw, 14px) clamp(16px, 3.5vw, 24px) !important;
+        gap: clamp(16px, 3vw, 22px) !important;
+        border-radius: clamp(20px, 4.5vw, 32px) clamp(20px, 4.5vw, 32px) 0 0 !important;
+        border: clamp(8px, 1.8vw, 12px) solid #703f0a !important;
+        z-index: 1000 !important;
+        display: flex !important;
     }
 
     .toolbox-item {
@@ -173,10 +196,16 @@ body.dragging-tool *:hover {
 
 @media (max-width: 360px) {
     .toolbox-container {
-        width: clamp(260px, 90vw, 360px);
-        height: clamp(70px, 12vw, 85px);
-        padding: clamp(8px, 2vw, 12px) clamp(14px, 4vw, 20px);
-        gap: clamp(14px, 3.5vw, 20px);
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: clamp(260px, 90vw, 360px) !important;
+        height: clamp(70px, 12vw, 85px) !important;
+        padding: clamp(8px, 2vw, 12px) clamp(14px, 4vw, 20px) !important;
+        gap: clamp(14px, 3.5vw, 20px) !important;
+        z-index: 1000 !important;
+        display: flex !important;
     }
 
     .toolbox-item {
