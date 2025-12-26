@@ -1,0 +1,164 @@
+.toolbox-container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(31vw, 500px);
+    height: min(6.25vw, 100px);
+    background-image: url('../../assets/images/fundo_madeira_escurajpg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: min(2.5vw, 40px) min(2.5vw, 40px) 0 0;
+    border: min(0.6vw, 10px) solid #703f0a;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: min(1.25vw, 20px);
+    padding: min(0.9vw, 15px) min(1.9vw, 30px);
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        0 -4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.toolbox-item {
+    width: min(4.5vw, 72px);
+    height: min(4.5vw, 72px);
+    min-width: min(4.5vw, 72px);
+    min-height: min(4.5vw, 72px);
+    background: linear-gradient(145deg, rgba(107, 68, 35, 0.95) 0%, rgba(139, 90, 43, 0.95) 50%, rgba(101, 67, 33, 0.95) 100%);
+    border-radius: min(1vw, 16px);
+    border: min(0.16vw, 2.5px) solid rgba(90, 58, 31, 0.9);
+    box-shadow: 
+        inset 0 2px 5px rgba(255, 255, 255, 0.15),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+        0 3px 8px rgba(0, 0, 0, 0.4);
+    cursor: grab !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+    position: relative;
+    user-select: none;
+    -webkit-user-drag: element;
+}
+
+.toolbox-item * {
+    cursor: grab !important;
+}
+
+.toolbox-item.dragging {
+    opacity: 0.5;
+    transform: scale(0.9);
+    cursor: grab;
+}
+
+.toolbox-item:not(.dragging):active {
+    cursor: grab;
+}
+
+.toolbox-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+}
+
+.toolbox-item-balde::before {
+    background-image: url('../../assets/images/toolbox/balde.png');
+}
+
+.toolbox-item-enxada::before {
+    background-image: url('../../assets/images/toolbox/enxada.png');
+}
+
+.toolbox-item:hover {
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 
+        inset 0 2px 5px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+        0 6px 16px rgba(0, 0, 0, 0.5);
+    border-color: rgba(160, 110, 53, 0.95);
+    background: linear-gradient(145deg, rgba(139, 90, 43, 0.98) 0%, rgba(160, 110, 53, 0.98) 50%, rgba(139, 90, 43, 0.98) 100%);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)) brightness(1.1);
+}
+
+.toolbox-item:hover::before {
+    filter: brightness(1.1);
+}
+
+.toolbox-item:not(.dragging):active {
+    transform: translateY(-2px) scale(1.05);
+}
+
+.toolbox-item.selected {
+    border-color: #ffc947;
+    background: linear-gradient(145deg, rgba(174, 130, 73, 1) 0%, rgba(212, 165, 116, 1) 50%, rgba(174, 130, 73, 1) 100%);
+    box-shadow: 
+        inset 0 2px 5px rgba(255, 255, 255, 0.25),
+        inset 0 -1px 3px rgba(0, 0, 0, 0.15),
+        0 0 20px rgba(255, 201, 71, 0.6),
+        0 4px 12px rgba(0, 0, 0, 0.5);
+    filter: drop-shadow(0 4px 10px rgba(255, 201, 71, 0.7)) brightness(1.15);
+}
+
+.toolbox-item.selected::before {
+    filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 201, 71, 0.7));
+}
+
+/* Estilo global durante o drag */
+body.dragging-tool,
+body.dragging-tool * {
+    cursor: grab !important;
+}
+
+body.dragging-tool *:hover {
+    cursor: grab !important;
+}
+
+/* Mobile Responsive - ajuste para mobile */
+@media (max-width: 768px) {
+    .toolbox-container {
+        width: min(60vw, 420px);
+        height: min(8vw, 95px);
+        border-radius: min(3vw, 32px) min(3vw, 32px) 0 0;
+        border: min(1.2vw, 12px) solid #703f0a;
+        padding: min(1.2vw, 14px) min(2vw, 24px);
+        gap: min(1.8vw, 20px);
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .toolbox-item {
+        width: min(6vw, 70px);
+        height: min(6vw, 70px);
+        min-width: min(6vw, 70px);
+        min-height: min(6vw, 70px);
+        cursor: pointer !important;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+@media (max-width: 480px) {
+    .toolbox-container {
+        width: min(70vw, 360px);
+        height: min(9vw, 85px);
+        padding: min(1.5vw, 12px) min(2.5vw, 20px);
+        gap: min(2vw, 18px);
+        border-radius: min(3.5vw, 28px) min(3.5vw, 28px) 0 0;
+        border: min(1.5vw, 10px) solid #703f0a;
+    }
+
+    .toolbox-item {
+        width: min(5.5vw, 62px);
+        height: min(5.5vw, 62px);
+        min-width: min(5.5vw, 62px);
+        min-height: min(5.5vw, 62px);
+    }
+}

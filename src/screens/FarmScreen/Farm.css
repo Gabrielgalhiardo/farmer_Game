@@ -1,0 +1,26 @@
+.farm-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    background-image: url('../../assets/images/bg_farm.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Mobile Responsive - escala tudo proporcionalmente */
+@media (max-width: 768px) {
+    .farm-container {
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 480px) {
+    .farm-container {
+        font-size: 0.75em;
+    }
+}
